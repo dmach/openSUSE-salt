@@ -75,10 +75,12 @@ def _fetch_secret(pass_path):
     Fetch secret from pass based on pass_path. If there is
     any error, return back the original pass_path value
     """
+    pass_exec = _get_pass_exec()
+
     # Remove whitespaces from the pass_path
     pass_path = pass_path.strip()
 
-    cmd = ["pass", "show", pass_path]
+    cmd = [pass_exec, "show", pass_path]
     log.debug("Fetching secret: %s", " ".join(cmd))
 
     # Make sure environment variable HOME is set, since Pass looks for the
@@ -116,5 +118,4 @@ def render(pass_info, saltenv="base", sls="", argline="", **kwargs):
     """
     Fetch secret from pass based on pass_path
     """
-    _get_pass_exec()
     return _decrypt_object(pass_info)
